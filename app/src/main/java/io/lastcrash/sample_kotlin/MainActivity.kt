@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity(), LastCrashListener {
                         },
                         modifier = Modifier.size(width = 100.dp, height = 20.dp)
                     ) {
-                        Text(text = "Crash App")
+                        Text(text = "Test Crash")
                     }
                 }
             }
