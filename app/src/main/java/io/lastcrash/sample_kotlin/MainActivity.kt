@@ -23,7 +23,8 @@ class MainActivity : ComponentActivity(), LastCrashListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LastCrash.setListener(this)
-        LastCrash.configure("8c1ebdd74fd64190b41ddd93e8e3ec48", this)
+        LastCrash.configure("8c1ebdd74fd64190b41ddd93e8e3ec48", this, true)
+        LastCrash.applicationInitialized()
 
         setContent {
             LastCrashSampleAppKotlinTheme {
