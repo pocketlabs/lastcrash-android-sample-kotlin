@@ -19,8 +19,16 @@ dependencyResolutionManagement {
 - Then, add the following to your app build.gradle.kts file, then sync your project:
 
 ```bash
-implementation("io.lastcrash:lastcrash-android:1.1.16")
+implementation("io.lastcrash:lastcrash-android:1.1.17")
 implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+```
+
+In the Android manifest for you app ensure the following permissions are granted:
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 ```
 
 ### Initialize SDK:
@@ -41,6 +49,22 @@ The `lastCrashDidCrash` method will be called when crash reports are available t
 A call to `LastCrash.applicationInitialized()` must be made after your app is initialized in order to track application not responding (ANR) errors.
 
 The reason this call to `LastCrash.applicationInitialized()` is required is to starting ANR monitoring only after everything in your app is initialized/loaded so false positives can be avoided.
+
+### Freeze support
+
+A call to `LastCrash.applicationInitialized()` must be made after your app is initialized in order to track freeze (application not responding or ANR) errors.  
+
+The reason this call to `LastCrash.applicationInitialized()` is required is to starting Freeze monitoring only after everything in your app is initialized/loaded so false positives can be avoided.
+
+### Networking support
+
+A `LastCrashInterceptor` class must be added to the OkHttpClient before its built to track networking errors and get summarized networking statistics including bytes sent/recieveed and response time.
+
+```java
+OkHttpClient.Builder builder = new OkHttpClient.Builder();
+builder.addInterceptor(new LastCrashInterceptor());
+OkHttpClient client = builder.build();
+```
 
 ### Force termination detection
 
