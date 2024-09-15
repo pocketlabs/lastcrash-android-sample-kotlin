@@ -97,6 +97,132 @@ class MainActivity : LastCrashListener {
 }
 ```
 
+## ProGuard and Native Symbols
+
+LastCrash can deobfuscate with any ProGuard-compatible mapping file and native (NDK) symbols file.
+
+If your app uses ProGuard add the following to the ProGuard file:
+
+```
+-keepattributes SourceFile,LineNumberTable        # Keep file names and line numbers.
+-keep public class * extends java.lang.Exception  # Optional: Keep custom exceptions.
+```
+
+### Gradle
+
+Ensure `pluginManagement` includes the LastCrash maven repository.
+
+```groovy
+pluginManagement {
+    repositories {
+        maven {
+            url "https://mvn.lastcrash.io/releases"
+        }
+        //...
+    }
+}
+```
+
+Add the `io.lastcrash.gradle` plugin to your gradle environment and configure the LastCrash plugin with your API Key.
+
+Configure which build variants you would like to deobfuscate and upload ProGuard mappings to LastCrash.
+
+Here are full examples for both Kotlin and Groovy app gradle scripts.
+
+#### Kotlin: build.gradle.kts
+
+```kotlin
+import io.lastrash.gradle.LastCrashExtension
+
+plugins {
+    // ...
+    id("io.lastcrash.gradle") version "1.0"
+}
+
+lastcrash {
+    apiKey = "LASTCRASH_API_KEY"
+}
+// ...
+
+android {
+  // To enable LastCrash mapping file upload for specific build types:
+  buildTypes {
+    release {
+      minifyEnabled = true
+      configure<LastCrashExtension> {
+        uploadSymbols = true
+      }
+    }
+  }
+
+  ...
+
+  // To enable LastCrash mapping file upload for specific product flavors:
+  flavorDimensions += "environment"
+  productFlavors {
+    create("staging") {
+      dimension = "environment"
+      ...
+      configure<LastCrashExtension> {
+        uploadSymbols = false
+      }
+    }
+    create("prod") {
+      dimension = "environment"
+      ...
+      configure<LastCrashExtension> {
+        uploadSymbols = true
+      }
+    }
+  }
+}
+```
+
+#### Groovy: build.gradle
+
+```groovy
+plugins {
+    id("io.lastcrash.gradle") version "1.0"
+}
+
+lastcrash {
+    apiKey = "LASTCRASH_API_KEY"
+}
+
+android {
+  // To enable LastCrash mapping file upload for specific build types:
+  buildTypes {
+    release {
+      minifyEnabled true
+      lastcrashExtension {
+        uploadSymbols true
+      }
+    }
+  }
+
+  ...
+
+  // To enable Crashlytics mapping file upload for specific product flavors:
+  flavorDimensions "environment"
+  productFlavors {
+    staging {
+      dimension "environment"
+      ...
+      lastcrashExtension {
+        uploadSymbols false
+      }
+    }
+    prod {
+      dimension "environment"
+      ...
+      lastcrashExtension {
+        uploadSymbols true
+      }
+    }
+  }
+}
+```
+
 ## Testing
 
 Run app in `Release` mode with debugging turned off. For best results, run on a physical device, rather than an emulator.

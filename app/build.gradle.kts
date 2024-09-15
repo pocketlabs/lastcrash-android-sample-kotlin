@@ -1,6 +1,13 @@
+import io.lastrash.gradle.LastCrashExtension
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("io.lastcrash.gradle") version "1.0"
+}
+
+lastcrash {
+    apiKey = "8c1ebdd74fd64190b41ddd93e8e3ec48"
 }
 
 android {
@@ -22,11 +29,14 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            configure<LastCrashExtension> {
+                uploadSymbols = true
+            }
         }
     }
     compileOptions {
@@ -51,7 +61,7 @@ android {
 
 dependencies {
 
-    implementation( "io.lastcrash:lastcrash-android:1.1.18")
+    implementation( "io.lastcrash:lastcrash-android:1.1.19")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
