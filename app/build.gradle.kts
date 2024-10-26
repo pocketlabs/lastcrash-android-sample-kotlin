@@ -61,7 +61,7 @@ android {
 
 dependencies {
 
-    implementation( "io.lastcrash:lastcrash-android:1.1.19")
+    implementation( "io.lastcrash:lastcrash-android:1.1.20")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
 

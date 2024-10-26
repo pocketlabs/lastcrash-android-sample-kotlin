@@ -19,7 +19,7 @@ dependencyResolutionManagement {
 - Then, add the following to your app build.gradle.kts file, then sync your project:
 
 ```bash
-implementation("io.lastcrash:lastcrash-android:1.1.18")
+implementation("io.lastcrash:lastcrash-android:1.1.20")
 implementation("com.squareup.okhttp3:okhttp:4.12.0")
 implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 ```
