@@ -5,7 +5,6 @@ import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -17,12 +16,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.lastcrash.sample_kotlin.ui.theme.LastCrashSampleAppKotlinTheme
 import io.lastcrash.sdk.LastCrash
-import io.lastcrash.sdk.LastCrashListener
+import io.lastcrash.sdk.LastCrashReportSenderListener
 
-class MainActivity : ComponentActivity(), LastCrashListener {
+class MainActivity : ComponentActivity(), LastCrashReportSenderListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LastCrash.setListener(this)
+        LastCrash.setCrashReportSenderListener(this)
         LastCrash.configure("8c1ebdd74fd64190b41ddd93e8e3ec48", this, true)
         LastCrash.applicationInitialized()
 
@@ -48,8 +47,8 @@ class MainActivity : ComponentActivity(), LastCrashListener {
         }
     }
 
-    override fun lastCrashDidCrash() {
-        LastCrash.send()
+    override fun lastCrashReportSenderHandleCrash() {
+        LastCrash.sendCrashes()
     }
 }
 
