@@ -2,7 +2,7 @@
 
 ## API Documentation
 
-[LastCrash iOS Latest API Documentation](https://docs.lastcrash.io/android/api/latest/index.html)
+[LastCrash Android Latest API Documentation](https://docs.lastcrash.io/android/api/latest/index.html)
 
 ## SDK Setup Instructions
 
